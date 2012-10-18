@@ -1,4 +1,4 @@
-# PDF Ravager
+# PDF Ravager [![Build Status](https://secure.travis-ci.org/abevoelker/pdf_ravager.png)](http://travis-ci.org/abevoelker/pdf_ravager)
 
 Provides a simple DSL for easily filling out AcroForms PDF or XFA documents.
 
