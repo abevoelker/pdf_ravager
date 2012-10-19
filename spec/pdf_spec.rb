@@ -79,59 +79,59 @@ class TestPDF < MiniTest::Unit::TestCase
   end
 
   def test_that_radio_group_always_filled_is_filled
-    assert_includes @pdf.fields, {:name => 'radio_group_always_filled', :value => 'foo', :type => :radio}
+    assert_includes @pdf.fields, {:name => 'radio_group_always_filled.foo', :value => true, :type => :radio}
   end
 
   def test_that_radio_group_when_true_is_set
-    assert_includes @pdf.fields, {:name => 'radio_group_when', :value => 'true', :type => :radio}
+    assert_includes @pdf.fields, {:name => 'radio_group_when.true', :value => true, :type => :radio}
   end
 
   def test_that_radio_group_when_false_is_not_set
-    refute_includes @pdf.fields, {:name => 'radio_group_when', :value => 'false', :type => :radio}
+    refute_includes @pdf.fields, {:name => 'radio_group_when.false', :value => true, :type => :radio}
   end
 
   def test_that_radio_group_if_true_is_set
-    assert_includes @pdf.fields, {:name => 'radio_group_if', :value => 'true', :type => :radio}
+    assert_includes @pdf.fields, {:name => 'radio_group_if.true', :value => true, :type => :radio}
   end
 
   def test_that_radio_group_if_false_is_not_set
-    refute_includes @pdf.fields, {:name => 'radio_group_if', :value => 'false', :type => :radio}
+    refute_includes @pdf.fields, {:name => 'radio_group_if.false', :value => true, :type => :radio}
   end
 
   def test_that_radio_group_unless_true_is_not_set
-    refute_includes @pdf.fields, {:name => 'radio_group_unless', :value => 'true', :type => :radio}
+    refute_includes @pdf.fields, {:name => 'radio_group_unless.true', :value => true, :type => :radio}
   end
 
   def test_that_radio_group_unless_false_is_set
-    assert_includes @pdf.fields, {:name => 'radio_group_unless', :value => 'false', :type => :radio}
+    assert_includes @pdf.fields, {:name => 'radio_group_unless.false', :value => true, :type => :radio}
   end
 
   def test_that_checkbox_group_always_checked_is_checked
-    assert_includes @pdf.fields, {:name => 'checkbox_group_always_checked', :value => 'foo', :type => :checkbox}
+    assert_includes @pdf.fields, {:name => 'checkbox_group_always_checked.foo', :value => true, :type => :checkbox}
   end
 
   def test_that_checkbox_group_when_true_is_set
-    assert_includes @pdf.fields, {:name => 'checkbox_group_when', :value => 'true', :type => :checkbox}
+    assert_includes @pdf.fields, {:name => 'checkbox_group_when.true', :value => true, :type => :checkbox}
   end
 
   def test_that_checkbox_group_when_false_is_not_set
-    refute_includes @pdf.fields, {:name => 'checkbox_group_when', :value => 'false', :type => :checkbox}
+    refute_includes @pdf.fields, {:name => 'checkbox_group_when.false', :value => true, :type => :checkbox}
   end
 
   def test_that_checkbox_group_if_true_is_set
-    assert_includes @pdf.fields, {:name => 'checkbox_group_if', :value => 'true', :type => :checkbox}
+    assert_includes @pdf.fields, {:name => 'checkbox_group_if.true', :value => true, :type => :checkbox}
   end
 
   def test_that_checkbox_group_if_false_is_not_set
-    refute_includes @pdf.fields, {:name => 'checkbox_group_if', :value => 'false', :type => :checkbox}
+    refute_includes @pdf.fields, {:name => 'checkbox_group_if.false', :value => true, :type => :checkbox}
   end
 
   def test_that_checkbox_group_unless_true_is_not_set
-    refute_includes @pdf.fields, {:name => 'checkbox_group_unless', :value => 'true', :type => :checkbox}
+    refute_includes @pdf.fields, {:name => 'checkbox_group_unless.true', :value => true, :type => :checkbox}
   end
 
   def test_that_checkbox_group_unless_false_is_set
-    assert_includes @pdf.fields, {:name => 'checkbox_group_unless', :value => 'false', :type => :checkbox}
+    assert_includes @pdf.fields, {:name => 'checkbox_group_unless.false', :value => true, :type => :checkbox}
   end
 
   def test_json_serialization

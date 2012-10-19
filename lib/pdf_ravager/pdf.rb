@@ -17,15 +17,15 @@ module PDFRavager
       @fields << {:name => name, :value => value, :type => :text}
     end
 
-    def radio_group(name, &blk)
+    def radio_group(gname, &blk)
       fields = []
       # TODO: replace w/ singleton method?
       PDF.instance_eval do
-        send(:define_method, :fill) do |value, opts={}|
+        send(:define_method, :fill) do |name, opts={}|
           return if opts.has_key?(:when)   && !opts[:when]
           return if opts.has_key?(:if)     && !opts[:if]
           return if opts.has_key?(:unless) && opts[:unless]
-          fields << {:name => name, :value => value, :type => :radio}
+          fields << {:name => "#{gname}.#{name}", :value => true, :type => :radio}
         end
         blk.call
         send(:undef_method, :fill)
@@ -34,15 +34,15 @@ module PDFRavager
       @fields += fields
     end
 
-    def checkbox_group(name, &blk)
+    def checkbox_group(gname, &blk)
       fields = []
       # TODO: replace w/ singleton method?
       PDF.instance_eval do
-        send(:define_method, :check) do |value, opts={}|
+        send(:define_method, :check) do |name, opts={}|
           return if opts.has_key?(:when)   && !opts[:when]
           return if opts.has_key?(:if)     && !opts[:if]
           return if opts.has_key?(:unless) && opts[:unless]
-          fields << {:name => name, :value => value, :type => :checkbox}
+          fields << {:name => "#{gname}.#{name}", :value => true, :type => :checkbox}
         end
         blk.call
         send(:undef_method, :check)
