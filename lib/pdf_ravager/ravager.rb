@@ -32,9 +32,9 @@ module PDFRavager
     end
 
     def set_field_value(name, value)
-      # Transform boolean checkbox value to 1 or 0 char
-      if get_field_type(name) == AcroFields::FIELD_TYPE_CHECKBOX && !!value
-        value = value == true ? '1' : '0'
+      # Convert boolean values to default checkbox string value
+      if value.instance_of?(TrueClass) || value.instance_of?(FalseClass)
+        value = !!value ? '1' : '0'
       end
       # First use AcroForms method
       begin
