@@ -21,6 +21,7 @@ info = pdf do
     fill 'male',   :if => data[:gender] == 'm'
     fill 'female', :if => data[:gender] == 'f'
   end
+  check 'related' if data[:relation]
   checkbox_group 'relation' do
     check 'parent',  :if => ['Mom', 'Dad'].include?(data[:relation])
     check 'sibling', :if => ['Brother', 'Sister'].include?(data[:relation])

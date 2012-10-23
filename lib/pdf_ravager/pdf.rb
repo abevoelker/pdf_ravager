@@ -17,6 +17,13 @@ module PDFRavager
       @fields << {:name => name, :value => value, :type => :text}
     end
 
+    def check(name, opts={})
+      return if opts.has_key?(:when)   && !opts[:when]
+      return if opts.has_key?(:if)     && !opts[:if]
+      return if opts.has_key?(:unless) && opts[:unless]
+      @fields << {:name => name, :value => true, :type => :checkbox}
+    end
+
     def radio_group(gname, &blk)
       fields = []
       # TODO: replace w/ singleton method?
@@ -35,20 +42,17 @@ module PDFRavager
     end
 
     def checkbox_group(gname, &blk)
-      fields = []
       # TODO: replace w/ singleton method?
       PDF.instance_eval do
+        alias_method :__check_original__, :check
         send(:define_method, :check) do |name, opts={}|
-          return if opts.has_key?(:when)   && !opts[:when]
-          return if opts.has_key?(:if)     && !opts[:if]
-          return if opts.has_key?(:unless) && opts[:unless]
-          fields << {:name => "#{gname}.#{name}", :value => true, :type => :checkbox}
+          __check_original__("#{gname}.#{name}", opts)
         end
         blk.call
-        send(:undef_method, :check)
+        # restore check method back to normal
+        alias_method :check, :__check_original__
+        send(:undef_method, :__check_original__)
       end
-
-      @fields += fields
     end
 
     if RUBY_PLATFORM =~ /java/
