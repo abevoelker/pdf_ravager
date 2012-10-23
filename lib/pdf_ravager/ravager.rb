@@ -32,10 +32,6 @@ module PDFRavager
     end
 
     def set_field_value(name, value)
-      # Convert boolean values to default checkbox string value
-      if value.instance_of?(TrueClass) || value.instance_of?(FalseClass)
-        value = !!value ? '1' : '0'
-      end
       # First use AcroForms method
       begin
         @afields.setField(XfaForm::Xml2Som::getShortName(SOM.escape(name)), value)

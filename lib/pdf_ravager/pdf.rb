@@ -59,7 +59,12 @@ module PDFRavager
       def ravage(file, opts={})
         PDFRavager::Ravager.open(opts.merge(:in_file => file)) do |pdf|
           @fields.each do |f|
-            pdf.set_field_value(f[:name], f[:value])
+            value = if f.type == :checkbox
+              !!f[:value] ? '1' : '0' # Checkbox default string values
+            else
+              f[:value]
+            end
+            pdf.set_field_value(f[:name], value)
           end
         end
       end
