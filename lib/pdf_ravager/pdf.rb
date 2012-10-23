@@ -32,7 +32,7 @@ module PDFRavager
           return if opts.has_key?(:when)   && !opts[:when]
           return if opts.has_key?(:if)     && !opts[:if]
           return if opts.has_key?(:unless) && opts[:unless]
-          fields << {:name => "#{gname}.#{name}", :value => true, :type => :radio}
+          fields << {:name => gname, :value => name, :type => :radio}
         end
         blk.call
         send(:undef_method, :fill)
