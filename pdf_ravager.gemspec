@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.description = %q{DSL to aid filling out AcroForms PDF and XFA documents}
 
   s.add_dependency "json"
+  s.add_dependency "nokogiri"
   s.add_development_dependency "bundler", ">= 1.0.0"
 
   s.files         = `git ls-files`.split("\n")
