@@ -4,7 +4,7 @@ Provides a simple DSL for easily filling out AcroForms PDF or XFA documents.
 
 ## Description
 
-This library uses a combination of a simple DSL and a minimal veneer over the
+This library uses a combination of a simple DSL and a minimal façade over the
 last free version of the iText library to aid in filling out AcroForms PDF or
 XFA documents.
 
