@@ -37,7 +37,9 @@ module PDFRavager
         @afields.setField(XfaForm::Xml2Som::getShortName(SOM.escape(name)), value)
       rescue java.lang.NullPointerException
         # If the AcroForms method doesn't work, we'll set the XDP
-        doc = Nokogiri::XML::Document.wrap(@xfa.getDomDocument)
+        # Note: the double-load is to work around a Nokogiri bug I found:
+        # https://github.com/sparklemotion/nokogiri/issues/781
+        doc = Nokogiri::XML(Nokogiri::XML::Document.wrap(@xfa.getDomDocument).to_xml)
         doc.xpath("//*[local-name()='field'][@name='#{name}']").each do |node|
           # Create an XML node in the XDP basically like this: "<value><text>#{value}</text></value>"
           Nokogiri::XML::Builder.with(node) do |xml|
