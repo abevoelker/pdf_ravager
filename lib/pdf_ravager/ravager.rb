@@ -1,17 +1,17 @@
 require 'java'
 require File.dirname(__FILE__)  + '/../../vendor/iText-4.2.0'
 
-include_class "com.lowagie.text.pdf.AcroFields"
-include_class "com.lowagie.text.pdf.PdfArray"
-include_class "com.lowagie.text.pdf.PdfDictionary"
-include_class "com.lowagie.text.pdf.PdfName"
-include_class "com.lowagie.text.pdf.PdfObject"
-include_class "com.lowagie.text.pdf.PdfReader"
-include_class "com.lowagie.text.pdf.PdfStamper"
-include_class "com.lowagie.text.pdf.PdfStream"
-include_class "com.lowagie.text.pdf.PdfWriter"
-include_class "com.lowagie.text.pdf.XfaForm"
-include_class "com.lowagie.text.pdf.XfdfReader"
+java_import "com.lowagie.text.pdf.AcroFields"
+java_import "com.lowagie.text.pdf.PdfArray"
+java_import "com.lowagie.text.pdf.PdfDictionary"
+java_import "com.lowagie.text.pdf.PdfName"
+java_import "com.lowagie.text.pdf.PdfObject"
+java_import "com.lowagie.text.pdf.PdfReader"
+java_import "com.lowagie.text.pdf.PdfStamper"
+java_import "com.lowagie.text.pdf.PdfStream"
+java_import "com.lowagie.text.pdf.PdfWriter"
+java_import "com.lowagie.text.pdf.XfaForm"
+java_import "com.lowagie.text.pdf.XfdfReader"
 
 module PDFRavager
   class Ravager
