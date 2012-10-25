@@ -31,7 +31,8 @@ module PDFRavager
       out
     end
 
-    def set_field_value(name, value)
+    def set_field_value(name, value, type=nil)
+      return set_html_field(name, value) if type == :html
       # First use AcroForms method
       begin
         @afields.setField(XfaForm::Xml2Som::getShortName(SOM.escape(name)), value)
@@ -43,9 +44,11 @@ module PDFRavager
         doc.xpath("//*[local-name()='field'][@name='#{name}']").each do |node|
           # Create an XML node in the XDP basically like this: "<value><text>#{value}</text></value>"
           Nokogiri::XML::Builder.with(node) do |xml|
-            xml.value_ do |v|
-              v.text_ value
-            end
+            xml.value_ {
+              xml.text_ {
+                xml.text value
+              }
+            }
           end
         end
         @xfa.setDomDocument(doc.to_java)
@@ -76,6 +79,23 @@ module PDFRavager
       @xfa = @afields.getXfa
       @som = @xfa.getDatasetsSom
       @som_template = @xfa.getTemplateSom
+    end
+
+    def set_html_field(name, value)
+      doc = Nokogiri::XML(Nokogiri::XML::Document.wrap(@xfa.getDomDocument).to_xml)
+      doc.xpath("//*[local-name()='field'][@name='#{name}']").each do |node|
+        Nokogiri::XML::Builder.with(node) do |xml|
+          xml.value_ do
+            xml.exData('contentType' => 'text/html') do
+              xml.body_('xmlns' => "http://www.w3.org/1999/xhtml", 'xmlns:xfa' => "http://www.xfa.org/schema/xfa-data/1.0/") do
+                xml << value # Note: this value is not sanitized/escaped!
+              end
+            end
+          end
+        end
+      end
+      @xfa.setDomDocument(doc.to_java)
+      @xfa.setChanged(true)
     end
 
   end

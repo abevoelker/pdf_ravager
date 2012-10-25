@@ -17,6 +17,13 @@ module PDFRavager
       @fields << {:name => name, :value => value, :type => :text}
     end
 
+    def html(name, value, opts={})
+      return if opts.has_key?(:when)   && !opts[:when]
+      return if opts.has_key?(:if)     && !opts[:if]
+      return if opts.has_key?(:unless) && opts[:unless]
+      @fields << {:name => name, :value => value, :type => :html}
+    end
+
     def check(name, opts={})
       return if opts.has_key?(:when)   && !opts[:when]
       return if opts.has_key?(:if)     && !opts[:if]
@@ -64,7 +71,7 @@ module PDFRavager
             else
               f[:value]
             end
-            pdf.set_field_value(f[:name], value)
+            pdf.set_field_value(f[:name], value, f[:type])
           end
         end
       end

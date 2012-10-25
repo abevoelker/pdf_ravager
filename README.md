@@ -17,6 +17,7 @@ data = {:name => 'Bob', :gender => 'm', :relation => 'Uncle' }
 
 info = pdf do
   text 'name', data[:name]
+  html 'name_stylized', "<b>#{data[:name]}</b>" # warning: HTML is not escaped
   radio_group 'sex' do
     fill 'male',   :if => data[:gender] == 'm'
     fill 'female', :if => data[:gender] == 'f'
@@ -43,9 +44,13 @@ info.ravage '/tmp/info.pdf', :out_file => '/tmp/info_filled.pdf'
 
 ## Usage
 
-To find the names of the fields, use a tool such as Adobe LiveCycle.
+To find the names of the fields, use a tool such as Adobe LiveCycle. The
+`html` type is a subset of XHTML defined by [Adobe's XFA standard][1] - full
+HTML support isn't available.
 
 ## Copyright
 
 Copyright (c) 2012 Abe Voelker. Released under the terms of the
 MIT license. See LICENSE for details.
+
+[1]: http://partners.adobe.com/public/developer/xml/index_arch.html
