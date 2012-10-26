@@ -32,7 +32,7 @@ module PDFRavager
     end
 
     def set_field_value(name, value, type=nil)
-      return set_html_field(name, value) if type == :html
+      return set_rich_text_field(name, value) if type == :rich_text
       # First use AcroForms method
       begin
         @afields.setField(XfaForm::Xml2Som::getShortName(SOM.escape(name)), value)
@@ -81,7 +81,7 @@ module PDFRavager
       @som_template = @xfa.getTemplateSom
     end
 
-    def set_html_field(name, value)
+    def set_rich_text_field(name, value)
       doc = Nokogiri::XML(Nokogiri::XML::Document.wrap(@xfa.getDomDocument).to_xml)
       doc.xpath("//*[local-name()='field'][@name='#{name}']").each do |node|
         Nokogiri::XML::Builder.with(node) do |xml|

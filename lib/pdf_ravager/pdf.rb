@@ -17,11 +17,11 @@ module PDFRavager
       @fields << {:name => name, :value => value, :type => :text}
     end
 
-    def html(name, value, opts={})
+    def rich_text(name, value, opts={})
       return if opts.has_key?(:when)   && !opts[:when]
       return if opts.has_key?(:if)     && !opts[:if]
       return if opts.has_key?(:unless) && opts[:unless]
-      @fields << {:name => name, :value => value, :type => :html}
+      @fields << {:name => name, :value => value, :type => :rich_text}
     end
 
     def check(name, opts={})

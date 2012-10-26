@@ -17,7 +17,7 @@ data = {:name => 'Bob', :gender => 'm', :relation => 'Uncle' }
 
 info = pdf do
   text 'name', data[:name]
-  html 'name_stylized', "<b>#{data[:name]}</b>" # warning: HTML is not escaped
+  rich_text 'name_stylized', "<b>#{data[:name]}</b>" # warning: text is not HTML-escaped!
   radio_group 'sex' do
     fill 'male',   :if => data[:gender] == 'm'
     fill 'female', :if => data[:gender] == 'f'
@@ -44,9 +44,36 @@ info.ravage '/tmp/info.pdf', :out_file => '/tmp/info_filled.pdf'
 
 ## Usage
 
-To find the names of the fields, use a tool such as Adobe LiveCycle. The
-`html` type is a subset of XHTML defined by [Adobe's XFA standard][1] - full
-HTML support isn't available.
+### Field Names
+To query and modify a form's field names, use a tool such as Adobe
+LiveCycle.
+
+### Rich Text
+The `rich_text` type is specific to XFA forms. To understand how it
+should be used, see the "Rich Text Reference" section of
+[Adobe's XFA standard][1]. Rich Text is defined there as a subset of
+XHTML and CSS which uses some custom restrictions and extensions by
+Adobe. The minimum XHTML and CSS elements that a standards-compliant
+XFA processor (e.g. Adobe Reader) must support are also listed there
+and can be used as a guide.
+
+### Checkbox Groups
+Because there is no such thing as a "checkbox group," the
+`checkbox_group` syntax is simply syntactic sugar for calling
+`check` with the group name and a `.` prepended to it. For
+example,
+
+```ruby
+checkbox_group 'relation' do
+  check 'parent'
+end
+```
+
+is equivalent to
+
+```ruby
+check 'relation.parent'
+```
 
 ## Copyright
 

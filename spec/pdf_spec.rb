@@ -11,7 +11,7 @@ class TestPDF < MiniTest::Unit::TestCase
       text 'text_if_false',     'foo', :if => false
       text 'text_unless_true',  'foo', :unless => true
       text 'text_unless_false', 'foo', :unless => false
-      html 'html', '<b>foo</b>'
+      rich_text 'rich', '<b>foo</b>'
       check 'checkbox'
       radio_group 'radio_group_always_filled' do
         fill 'foo'
@@ -80,8 +80,8 @@ class TestPDF < MiniTest::Unit::TestCase
     assert_includes @pdf.fields, {:name => 'text_unless_false', :value => 'foo', :type => :text}
   end
 
-  def test_that_html_is_set
-    assert_includes @pdf.fields, {:name => 'html', :value => '<b>foo</b>', :type => :html}
+  def test_that_rich_text_is_set
+    assert_includes @pdf.fields, {:name => 'rich', :value => '<b>foo</b>', :type => :rich_text}
   end
 
   def test_that_checkbox_is_set
