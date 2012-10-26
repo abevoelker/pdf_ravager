@@ -56,15 +56,6 @@ module PDFRavager
       end
     end
 
-    def get_field_type(name)
-      short_name = XfaForm::Xml2Som::getShortName(SOM.escape(name))
-      begin
-        @afields.getFieldType(short_name)
-      rescue java.lang.NullPointerException
-        nil
-      end
-    end
-
     def destroy
       @stamper.close
     end
