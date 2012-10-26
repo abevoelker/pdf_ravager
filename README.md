@@ -19,14 +19,14 @@ info = pdf do
   text 'name', data[:name]
   rich_text 'name_stylized', "<b>#{data[:name]}</b>" # warning: text is not HTML-escaped!
   radio_group 'sex' do
-    fill 'male',   :if => data[:gender] == 'm'
-    fill 'female', :if => data[:gender] == 'f'
+    fill 'male'   if data[:gender] == 'm'
+    fill 'female' if data[:gender] == 'f'
   end
   check 'related' if data[:relation]
   checkbox_group 'relation' do
-    check 'parent',  :if => ['Mom', 'Dad'].include?(data[:relation])
-    check 'sibling', :if => ['Brother', 'Sister'].include?(data[:relation])
-    check 'other',   :unless => ['Brother', 'Sister', 'Mom', 'Dad'].include?(data[:relation])
+    check 'parent'  if ['Mom', 'Dad'].include?(data[:relation])
+    check 'sibling' if ['Brother', 'Sister'].include?(data[:relation])
+    check 'other'   unless ['Brother', 'Sister', 'Mom', 'Dad'].include?(data[:relation])
     # OR
     case data[:relation]
     when 'Mom', 'Dad'
@@ -60,7 +60,7 @@ and can be used as a guide.
 ### Checkbox Groups
 Because there is no such thing as a "checkbox group," the
 `checkbox_group` syntax is simply syntactic sugar for calling
-`check` with the group name and a `.` prepended to it. For
+`check` with the group name and a `.` prepended to the name. For
 example,
 
 ```ruby

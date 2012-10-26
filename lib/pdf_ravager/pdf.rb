@@ -11,23 +11,14 @@ module PDFRavager
     end
 
     def text(name, value, opts={})
-      return if opts.has_key?(:when)   && !opts[:when]
-      return if opts.has_key?(:if)     && !opts[:if]
-      return if opts.has_key?(:unless) && opts[:unless]
       @fields << {:name => name, :value => value, :type => :text}
     end
 
     def rich_text(name, value, opts={})
-      return if opts.has_key?(:when)   && !opts[:when]
-      return if opts.has_key?(:if)     && !opts[:if]
-      return if opts.has_key?(:unless) && opts[:unless]
       @fields << {:name => name, :value => value, :type => :rich_text}
     end
 
     def check(name, opts={})
-      return if opts.has_key?(:when)   && !opts[:when]
-      return if opts.has_key?(:if)     && !opts[:if]
-      return if opts.has_key?(:unless) && opts[:unless]
       @fields << {:name => name, :value => true, :type => :checkbox}
     end
 
@@ -36,9 +27,6 @@ module PDFRavager
       # TODO: replace w/ singleton method?
       PDF.instance_eval do
         send(:define_method, :fill) do |name, opts={}|
-          return if opts.has_key?(:when)   && !opts[:when]
-          return if opts.has_key?(:if)     && !opts[:if]
-          return if opts.has_key?(:unless) && opts[:unless]
           fields << {:name => gname, :value => name, :type => :radio}
         end
         blk.call
