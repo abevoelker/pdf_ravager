@@ -33,8 +33,8 @@ module PDFRavager
 
     def set_field_value(name, value, type=nil)
       return set_rich_text_field(name, value) if type == :rich_text
-      # First use AcroForms method
       begin
+        # First try AcroForms method of setting value
         @afields.setField(XfaForm::Xml2Som::getShortName(SOM.escape(name)), value)
       rescue java.lang.NullPointerException
         # If the AcroForms method doesn't work, we'll set the XDP
@@ -42,7 +42,7 @@ module PDFRavager
         # https://github.com/sparklemotion/nokogiri/issues/781
         doc = Nokogiri::XML(Nokogiri::XML::Document.wrap(@xfa.getDomDocument).to_xml)
         doc.xpath("//*[local-name()='field'][@name='#{name}']").each do |node|
-          # Create an XML node in the XDP basically like this: "<value><text>#{value}</text></value>"
+          # Create an XML node in the XDP like this: "<value><text>#{value}</text></value>"
           Nokogiri::XML::Builder.with(node) do |xml|
             xml.value_ {
               xml.text_ {
