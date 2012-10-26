@@ -24,10 +24,6 @@ info = pdf do
   end
   check 'related' if data[:relation]
   checkbox_group 'relation' do
-    check 'parent'  if ['Mom', 'Dad'].include?(data[:relation])
-    check 'sibling' if ['Brother', 'Sister'].include?(data[:relation])
-    check 'other'   unless ['Brother', 'Sister', 'Mom', 'Dad'].include?(data[:relation])
-    # OR
     case data[:relation]
     when 'Mom', 'Dad'
       check 'parent'
