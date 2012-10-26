@@ -7,7 +7,6 @@ Gem::Specification.new do |s|
   s.platform    = 'java'
   s.authors     = ['Abe Voelker']
   s.email       = 'abe@abevoelker.com'
-  s.date        = '2012-10-17'
   s.homepage    = 'https://github.com/abevoelker/pdf_ravager'
   s.summary     = %q{DSL to aid filling out AcroForms PDF and XFA documents}
   s.description = %q{DSL to aid filling out AcroForms PDF and XFA documents}
