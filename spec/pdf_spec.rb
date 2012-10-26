@@ -4,9 +4,9 @@ require 'pdf_ravager/pdf'
 class TestPDF < MiniTest::Unit::TestCase
   def setup
     @pdf = pdf 'foo.pdf' do
-      text      'text', 'foo'
-      rich_text 'rich_text', '<b>foo</b>'
-      check     'checkbox'
+      text  'text',      'foo'
+      text  'rich_text', '<b>foo</b>', :rich => true
+      check 'checkbox'
       checkbox_group 'checkbox_group' do
         check 'foo'
       end
@@ -27,7 +27,7 @@ class TestPDF < MiniTest::Unit::TestCase
   end
 
   def test_that_rich_text_is_set
-    assert_includes @pdf.fields, {:name => 'rich_text', :value => '<b>foo</b>', :type => :rich_text}
+    assert_includes @pdf.fields, {:name => 'rich_text', :value => '<b>foo</b>', :type => :text, :options => {:rich => true}}
   end
 
   def test_that_checkbox_is_set

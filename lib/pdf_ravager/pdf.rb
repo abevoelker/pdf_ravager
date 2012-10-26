@@ -11,11 +11,11 @@ module PDFRavager
     end
 
     def text(name, value, opts={})
-      @fields << {:name => name, :value => value, :type => :text}
-    end
-
-    def rich_text(name, value, opts={})
-      @fields << {:name => name, :value => value, :type => :rich_text}
+      if opts.empty?
+        @fields << {:name => name, :value => value, :type => :text}
+      else
+        @fields << {:name => name, :value => value, :type => :text, :options => opts}
+      end
     end
 
     def check(name, opts={})
@@ -59,7 +59,7 @@ module PDFRavager
             else
               f[:value]
             end
-            pdf.set_field_value(f[:name], value, f[:type])
+            pdf.set_field_value(f[:name], value, f[:type], f[:options])
           end
         end
       end
@@ -82,9 +82,13 @@ module PDFRavager
 
     def self.json_create(obj)
       fields = obj["data"]["fields"].map do |f|
-        # symbolize the keys
+        # symbolize the root keys
         f = f.inject({}){|h,(k,v)| h[k.to_sym] = v; h}
         f[:type] = f[:type].to_sym if f[:type]
+        # symbolize the :options keys
+        if f[:options]
+          f[:options] = f[:options].inject({}){|h,(k,v)| h[k.to_sym] = v; h}
+        end
         f
       end
       o = new(obj["data"]["name"], :fields => fields)

@@ -17,7 +17,7 @@ data = {:name => 'Bob', :gender => 'm', :relation => 'Uncle' }
 
 info = pdf do
   text 'name', data[:name]
-  rich_text 'name_stylized', "<b>#{data[:name]}</b>" # warning: text is not HTML-escaped!
+  text 'name_stylized', "<b>#{data[:name]}</b>", :rich => true
   radio_group 'sex' do
     fill 'male'   if data[:gender] == 'm'
     fill 'female' if data[:gender] == 'f'
@@ -52,6 +52,10 @@ XHTML and CSS which uses some custom restrictions and extensions by
 Adobe. The minimum XHTML and CSS elements that a standards-compliant
 XFA processor (e.g. Adobe Reader) must support are also listed there
 and can be used as a guide.
+
+**Note**: Rich text values are not HTML-escaped or sanitized in any
+way. It is suggested that you call `CGI.escape_html` on user-supplied
+input.
 
 ### Checkbox Groups
 Because there is no such thing as a "checkbox group," the
