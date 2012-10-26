@@ -45,9 +45,9 @@ To query and modify a form's field names, use a tool such as Adobe
 LiveCycle.
 
 ### Rich Text
-The `rich_text` type is specific to XFA forms. To understand how it
-should be used, see the "Rich Text Reference" section of
-[Adobe's XFA standard][1]. Rich Text is defined there as a subset of
+Rich text is specific to XFA forms. To understand how it should be used,
+see the "Rich Text Reference" section of [Adobe's XFA standard][1].
+Rich Text is defined there as a subset of
 XHTML and CSS which uses some custom restrictions and extensions by
 Adobe. The minimum XHTML and CSS elements that a standards-compliant
 XFA processor (e.g. Adobe Reader) must support are also listed there
