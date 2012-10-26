@@ -32,7 +32,7 @@ module PDFRavager
     end
 
     def set_field_value(name, value, type=nil, options={})
-      return set_rich_text_field(name, value) if type == :text && options[:rich] == true
+      return set_rich_text_field(name, value) if options && options[:rich]
       begin
         # First try AcroForms method of setting value
         @afields.setField(XfaForm::Xml2Som::getShortName(SOM.escape(name)), value)
