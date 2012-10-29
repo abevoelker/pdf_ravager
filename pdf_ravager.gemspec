@@ -4,7 +4,6 @@ require File.expand_path('../lib/pdf_ravager/version', __FILE__)
 Gem::Specification.new do |s|
   s.name        = "pdf_ravager"
   s.version     = PDFRavager::VERSION
-  s.platform    = 'java'
   s.authors     = ['Abe Voelker']
   s.email       = 'abe@abevoelker.com'
   s.homepage    = 'https://github.com/abevoelker/pdf_ravager'
