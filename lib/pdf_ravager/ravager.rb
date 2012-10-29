@@ -36,7 +36,7 @@ module PDFRavager
       return set_rich_text_field(name, value) if options && options[:rich]
       begin
         # First try AcroForms method of setting value
-        @afields.setField(XfaForm::Xml2Som::getShortName(SOM.escape(name)), value)
+        @afields.setField(SOM.short_name(name), value)
       rescue java.lang.NullPointerException
         # If the AcroForms method doesn't work, we'll set the XDP
         # Note: the double-load is to work around a Nokogiri bug I found:
@@ -93,6 +93,10 @@ module PDFRavager
   end
 
   class SOM
+    def self.short_name(str)
+      XfaForm::Xml2Som.getShortName(self.escape(str))
+    end
+
     def self.escape(str)
       XfaForm::Xml2Som.escapeSom(str) # just does: str.gsub(/\./) { '\\.' }
     end
