@@ -1,4 +1,5 @@
 require 'java'
+require 'nokogiri'
 require File.dirname(__FILE__)  + '/../../vendor/iText-4.2.0'
 
 java_import "com.lowagie.text.pdf.AcroFields"
