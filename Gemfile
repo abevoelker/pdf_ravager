@@ -1,13 +1,13 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gemspec
 
-group :development, :test do
-  gem "minitest",      "~> 4.1.0"
-  gem "rspec",         "~> 2.11.0"
-  gem "turn",          "~> 0.9.6", :require => false
-  gem "bundler",       ">= 1.0.0"
-  gem "rake",          "~> 0.9.2.2"
-  # Necessary for `rake release`
-  gem "jruby-openssl", "~> 0.7.7", :platforms => :jruby
+platforms :jruby do
+  # Necessary for `rake release` on JRuby
+  gem "jruby-openssl", "~> 0.7.7"
+end
+
+group :test do
+  # Formats and colorizes test output
+  gem "turn", "~> 0.9.6", :require => false
 end
