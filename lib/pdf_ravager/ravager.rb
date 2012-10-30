@@ -26,7 +26,7 @@ module PDFRavager
         java.io.ByteArrayOutputStream.new
       end
       raise "You must pass a block" unless block_given?
-      ravager = new(opts[:in_file], out)
+      ravager = new(opts.merge({:out => out}))
       yield ravager
       ravager.destroy
       out
@@ -58,19 +58,24 @@ module PDFRavager
     end
 
     def destroy
+      read_only! if @opts[:read_only]
       @stamper.close
     end
 
     private
 
-    def initialize(in_file, out)
-      @reader = PdfReader.new(in_file)
-      @out = out
-      @stamper = PdfStamper.new(@reader, @out)
+    def initialize(opts={})
+      @opts = opts
+      @reader = PdfReader.new(opts[:in_file])
+      @stamper = PdfStamper.new(@reader, opts[:out])
       @afields = @stamper.getAcroFields
       @xfa = @afields.getXfa
       @som = @xfa.getDatasetsSom
       @som_template = @xfa.getTemplateSom
+      @type = @xfa.isXfaPresent ? :xfa : :acro_forms
+      if @type == :xfa
+        @xfa_type = @afields.getFields.empty? ? :dynamic : :static
+      end
     end
 
     def set_rich_text_field(name, value)
@@ -90,6 +95,23 @@ module PDFRavager
       @xfa.setChanged(true)
     end
 
+    def read_only!
+      case @type
+      when :acro_forms
+        @stamper.setFormFlattening(true)
+      when :xfa
+        if @xfa_type == :static
+          @stamper.setFormFlattening(true)
+        else
+          doc = Nokogiri::XML(Nokogiri::XML::Document.wrap(@xfa.getDomDocument).to_xml)
+          doc.xpath("//*[local-name()='field']").each do |node|
+            node["access"] = "readOnly"
+          end
+          @xfa.setDomDocument(doc.to_java)
+          @xfa.setChanged(true)
+        end
+      end
+    end
   end
 
   class SOM
