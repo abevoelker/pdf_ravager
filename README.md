@@ -82,4 +82,7 @@ check 'relation.parent'
 Copyright (c) 2012 Abe Voelker. Released under the terms of the
 MIT license. See LICENSE for details.
 
+The [version of iText][2] vendored is licensed under the LGPL.
+
 [1]: http://partners.adobe.com/public/developer/xml/index_arch.html
+[2]: http://itext.svn.sourceforge.net/viewvc/itext/tags/iText_4_2_0/
