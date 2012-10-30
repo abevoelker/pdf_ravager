@@ -36,6 +36,8 @@ info = pdf do
 end
 
 info.ravage '/tmp/info.pdf', :out_file => '/tmp/info_filled.pdf'
+# if you'd like the populated form to be read-only:
+info.ravage '/tmp/info.pdf', :out_file => '/tmp/info_filled.pdf', :read_only => true
 ```
 
 ## Usage
