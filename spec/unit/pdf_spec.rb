@@ -1,4 +1,4 @@
-require 'spec_helper'
+require File.dirname(__FILE__) + '/unit_helper'
 require 'pdf_ravager/pdf'
 
 class TestPDF < MiniTest::Unit::TestCase
