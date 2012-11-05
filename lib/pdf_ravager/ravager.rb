@@ -38,23 +38,23 @@ module PDFRavager
         # First try AcroForms method of setting value
         @afields.setField(SOM.short_name(name), value)
       rescue java.lang.NullPointerException
-        # If the AcroForms method doesn't work, we'll set the XDP
-        # Note: the double-load is to work around a Nokogiri bug I found:
-        # https://github.com/sparklemotion/nokogiri/issues/781
-        doc = Nokogiri::XML(Nokogiri::XML::Document.wrap(@xfa.getDomDocument).to_xml)
-        doc.xpath("//*[local-name()='field'][@name='#{name}']").each do |node|
-          # Create an XML node in the XDP like this: "<value><text>#{value}</text></value>"
-          Nokogiri::XML::Builder.with(node) do |xml|
-            xml.value_ {
-              xml.text_ {
-                xml.text value
-              }
-            }
-          end
-        end
-        @xfa.setDomDocument(doc.to_java)
-        @xfa.setChanged(true)
       end
+      # Also look for the XDP node and set that value
+      # Note: the double-load is to work around a Nokogiri bug I found:
+      # https://github.com/sparklemotion/nokogiri/issues/781
+      doc = Nokogiri::XML(Nokogiri::XML::Document.wrap(@xfa.getDomDocument).to_xml)
+      doc.xpath("//*[local-name()='field'][@name='#{name}']").each do |node|
+        # Create an XML node in the XDP like this: "<value><text>#{value}</text></value>"
+        Nokogiri::XML::Builder.with(node) do |xml|
+          xml.value_ {
+            xml.text_ {
+              xml.text value
+            }
+          }
+        end
+      end
+      @xfa.setDomDocument(doc.to_java)
+      @xfa.setChanged(true)
     end
 
     def destroy
