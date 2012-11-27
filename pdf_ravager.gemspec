@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/abevoelker/pdf_ravager'
   s.summary     = %q{DSL to aid filling out AcroForms PDF and XFA documents}
   s.description = %q{DSL to aid filling out AcroForms PDF and XFA documents}
+  s.license     = 'MIT'
 
   s.add_dependency "json"
   s.add_dependency "nokogiri"
