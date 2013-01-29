@@ -2,18 +2,6 @@ require 'java'
 require 'nokogiri'
 require File.dirname(__FILE__)  + '/../../vendor/iText-4.2.0'
 
-java_import "com.lowagie.text.pdf.AcroFields"
-java_import "com.lowagie.text.pdf.PdfArray"
-java_import "com.lowagie.text.pdf.PdfDictionary"
-java_import "com.lowagie.text.pdf.PdfName"
-java_import "com.lowagie.text.pdf.PdfObject"
-java_import "com.lowagie.text.pdf.PdfReader"
-java_import "com.lowagie.text.pdf.PdfStamper"
-java_import "com.lowagie.text.pdf.PdfStream"
-java_import "com.lowagie.text.pdf.PdfWriter"
-java_import "com.lowagie.text.pdf.XfaForm"
-java_import "com.lowagie.text.pdf.XfdfReader"
-
 module PDFRavager
   class Ravager
     private_class_method :new
@@ -83,8 +71,8 @@ module PDFRavager
 
     def initialize(opts={})
       @opts = opts
-      @reader = PdfReader.new(opts[:in_file])
-      @stamper = PdfStamper.new(@reader, opts[:out])
+      @reader = com.lowagie.text.pdf.PdfReader.new(opts[:in_file])
+      @stamper = com.lowagie.text.pdf.PdfStamper.new(@reader, opts[:out])
       @afields = @stamper.getAcroFields
       @xfa = @afields.getXfa
       @som = @xfa.getDatasetsSom
@@ -146,11 +134,11 @@ module PDFRavager
 
   class SOM
     def self.short_name(str)
-      XfaForm::Xml2Som.getShortName(self.escape(str))
+      com.lowagie.text.pdf.XfaForm::Xml2Som.getShortName(self.escape(str))
     end
 
     def self.escape(str)
-      XfaForm::Xml2Som.escapeSom(str) # just does: str.gsub(/\./) { '\\.' }
+      com.lowagie.text.pdf.XfaForm::Xml2Som.escapeSom(str) # just does: str.gsub(/\./) { '\\.' }
     end
   end
 end
