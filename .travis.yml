@@ -1,14 +1,7 @@
 language: ruby
 rvm:
-  - "1.9.2"
-  - "1.9.3"
-  - jruby-19mode
-  - rbx-19mode
-matrix:
-  allow_failures:
-    - rvm: jruby-19mode
+  - jruby
 before_install:
   - sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner" -y
   - sudo apt-get update -y
   - sudo apt-get install acroread ghostscript -y
-
