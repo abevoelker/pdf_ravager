@@ -1,4 +1,3 @@
-require 'json'
 require 'pdf_ravager/fields/text'
 require 'pdf_ravager/fields/rich_text'
 require 'pdf_ravager/fields/checkbox'
