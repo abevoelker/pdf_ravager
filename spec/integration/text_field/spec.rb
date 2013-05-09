@@ -3,8 +3,8 @@ require 'integration/integration_helper'
 describe 'a PDF with a text field' do
   describe 'filled with foo' do
     before(:each) do
-      p = pdf do
-        text 'text_field', 'foo'
+      p = PDFRavager::Template.new do |t|
+        t.text 'text_field', 'foo'
       end
       pdf_file = File.join(File.dirname(__FILE__), "pdf")
       @pdf_file = "#{mktemp}.pdf"

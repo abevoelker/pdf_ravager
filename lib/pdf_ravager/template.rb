@@ -36,11 +36,11 @@ module PDFRavager
 
     if RUBY_PLATFORM =~ /java/
       def ravage(file, opts={})
-        PDFRavager::Ravager.ravage(self, file, opts)
+        PDFRavager::Ravager.ravage(self, opts.merge({:in_file => file}))
       end
     else
       def ravage(file, opts={})
-        raise "You can only ravage .pdfs using JRuby, not #{RUBY_PLATFORM}!"
+        raise "You can only ravage PDFs using JRuby, not #{RUBY_PLATFORM}!"
       end
     end
 

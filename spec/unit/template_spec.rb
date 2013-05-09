@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/unit_helper'
 require 'pdf_ravager/template'
 
-class TestPDF < MiniTest::Unit::TestCase
+class TestTemplate < MiniTest::Unit::TestCase
 
   def setup
     @template = PDFRavager::Template.new do |t|

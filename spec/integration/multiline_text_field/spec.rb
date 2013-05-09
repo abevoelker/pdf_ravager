@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../integration_helper'
 describe 'a PDF with a multiline text field' do
   describe 'filled with FOO' do
     before(:each) do
-      p = pdf do
-        text 'multilinetext', 'FOO' * 10000
+      p = PDFRavager::Template.new do |t|
+        t.text 'multilinetext', 'FOO' * 10000
       end
       pdf_file = File.join(File.dirname(__FILE__), "pdf")
       @pdf_file = "#{mktemp}.pdf"

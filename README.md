@@ -11,33 +11,42 @@ XFA documents.
 ## Synopsis
 
 ```ruby
-require 'pdf_ravager'
+require 'pdf_ravager/kernel'
 
-data = {:name => 'Bob', :gender => 'm', :relation => 'Uncle' }
+data = {name: 'Bob', gender: 'm', relation: 'Uncle' }
 
-info = pdf do
-  text 'name', data[:name]
-  text 'name_stylized', "<b>#{data[:name]}</b>", :rich => true
-  radio_group 'sex' do
-    fill 'male'   if data[:gender] == 'm'
-    fill 'female' if data[:gender] == 'f'
-  end
-  check 'related' if data[:relation]
-  checkbox_group 'relation' do
-    case data[:relation]
-    when 'Mom', 'Dad'
-      check 'parent'
-    when 'Brother', 'Sister'
-      check 'sibling'
-    else
-      check 'other'
-    end
+template = pdf do |p|
+  p.text      'name', data[:name]
+  p.rich_text 'name_stylized', "<b>#{data[:name]}</b>"
+  p.fill      'sex', 'male'   if data[:gender] == 'm'
+  p.fill      'sex', 'female' if data[:gender] == 'f'
+  case data[:relation]
+  when 'Mom', 'Dad'
+    p.check 'parent'
+  when 'Brother', 'Sister'
+    p.check 'sibling'
+  else
+    p.check 'other'
   end
 end
 
-info.ravage '/tmp/info.pdf', :out_file => '/tmp/info_filled.pdf'
+template.ravage '/tmp/info.pdf', out_file: '/tmp/info_filled.pdf'
 # if you'd like the populated form to be read-only:
-info.ravage '/tmp/info.pdf', :out_file => '/tmp/info_filled.pdf', :read_only => true
+template.ravage '/tmp/info.pdf', out_file: '/tmp/info_filled.pdf', read_only: true
+```
+
+If you don't want the global `pdf` method, the default `require 'pdf_ravager'`
+actually doesn't add it. You just need to be more wordy in this case:
+
+```ruby
+require 'pdf_ravager'
+
+data = {name: 'Bob', gender: 'm', relation: 'Uncle' }
+
+template = PDFRavager::Template.new do |p|
+  p.text 'name', data[:name]
+  # ...
+end
 ```
 
 ## Usage
@@ -58,24 +67,6 @@ and can be used as a guide.
 **Note**: Rich text values are not HTML-escaped or sanitized in any
 way. It is suggested that you call `CGI.escape_html` on user-supplied
 input.
-
-### Checkbox Groups
-Because there is no such thing as a "checkbox group," the
-`checkbox_group` syntax is simply syntactic sugar for calling
-`check` with the group name and a `.` prepended to the name. For
-example,
-
-```ruby
-checkbox_group 'relation' do
-  check 'parent'
-end
-```
-
-is equivalent to
-
-```ruby
-check 'relation.parent'
-```
 
 ## Copyright
 
