@@ -9,6 +9,10 @@ class TestTemplate < MiniTest::Unit::TestCase
       t.rich_text 'rich_text',   '<b>foo</b>'
       t.check     'checkbox1'
       t.uncheck   'checkbox2'
+      t.checkbox_group 'cbox_group' do |cb|
+        cb.check   'checked'
+        cb.uncheck 'unchecked'
+      end
       t.fill      'radio_group', 'button'
     end
 
@@ -37,6 +41,14 @@ class TestTemplate < MiniTest::Unit::TestCase
 
   def test_that_name_is_set
     assert_equal @template_with_name.name, 'template'
+  end
+
+  def test_that_checkbox_group_box_is_checked
+    assert_includes @template.fields, PDFRavager::Fields::Checkbox.new('cbox_group.checked', true)
+  end
+
+  def test_that_checkbox_group_box_is_unchecked
+    assert_includes @template.fields, PDFRavager::Fields::Checkbox.new('cbox_group.unchecked', false)
   end
 
 end

@@ -20,13 +20,16 @@ template = pdf do |p|
   p.rich_text 'name_stylized', "<b>#{data[:name]}</b>"
   p.fill      'sex', 'male'   if data[:gender] == 'm'
   p.fill      'sex', 'female' if data[:gender] == 'f'
-  case data[:relation]
-  when 'Mom', 'Dad'
-    p.check 'parent'
-  when 'Brother', 'Sister'
-    p.check 'sibling'
-  else
-    p.check 'other'
+  p.check 'related' if data[:relation]
+  p.checkbox_group 'relation' do |cg|
+    case data[:relation]
+    when 'Mom', 'Dad'
+      cg.check 'parent'
+    when 'Brother', 'Sister'
+      cg.check 'sibling'
+    else
+      cg.check 'other'
+    end
   end
 end
 
@@ -67,6 +70,28 @@ and can be used as a guide.
 **Note**: Rich text values are not HTML-escaped or sanitized in any
 way. It is suggested that you call `CGI.escape_html` on user-supplied
 input.
+
+### Checkbox Groups
+Because there is no such thing as a "checkbox group," the
+`checkbox_group` syntax is simply syntactic sugar for calling
+`check` with the group name and a `.` prepended to the name. For
+example,
+
+```ruby
+pdf do |p|
+  p.checkbox_group 'relation' do |cg|
+    cg.check 'parent'
+  end
+end
+```
+
+is equivalent to
+
+```ruby
+pdf do |p|
+  p.check 'relation.parent'
+end
+```
 
 ## Copyright
 
