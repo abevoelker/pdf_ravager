@@ -1,6 +1,8 @@
 language: ruby
 rvm:
-  - jruby
+  - jruby-18mode
+  - jruby-19mode
+  - jruby-head
 before_install:
   - sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner" -y
   - sudo apt-get update -y
