@@ -6,10 +6,10 @@ require 'pdf_ravager/ravager' if RUBY_PLATFORM =~ /java/
 
 module PDFRavager
   class Template
-    attr_reader :fields
+    attr_reader :name, :fields
 
-    def initialize
-      @fields = []
+    def initialize(name=nil)
+      @name, @fields = name, []
       yield self if block_given?
     end
 

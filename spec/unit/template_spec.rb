@@ -11,6 +11,8 @@ class TestTemplate < MiniTest::Unit::TestCase
       t.uncheck   'checkbox2'
       t.fill      'radio_group', 'button'
     end
+
+    @template_with_name = PDFRavager::Template.new('template'){}
   end
 
   def test_that_text_is_set
@@ -31,6 +33,10 @@ class TestTemplate < MiniTest::Unit::TestCase
 
   def test_that_radio_button_is_filled
     assert_includes @template.fields, PDFRavager::Fields::Radio.new('radio_group', 'button')
+  end
+
+  def test_that_name_is_set
+    assert_equal @template_with_name.name, 'template'
   end
 
 end
