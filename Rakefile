@@ -20,6 +20,6 @@ else
   task :spec => ['spec:unit']
 end
 
-task :default => :spec
+task :default => 'spec:unit'
 
 Bundler::GemHelper.install_tasks
