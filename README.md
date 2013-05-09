@@ -18,8 +18,10 @@ data = {name: 'Bob', gender: 'm', relation: 'Uncle' }
 template = pdf do |p|
   p.text      'name', data[:name]
   p.rich_text 'name_stylized', "<b>#{data[:name]}</b>"
-  p.fill      'sex', 'male'   if data[:gender] == 'm'
-  p.fill      'sex', 'female' if data[:gender] == 'f'
+  p.radio_group 'sex' do |rg|
+    rg.fill 'male'   if data[:gender] == 'm'
+    rg.fill 'female' if data[:gender] == 'f'
+  end
   p.check 'related' if data[:relation]
   p.checkbox_group 'relation' do |cg|
     case data[:relation]

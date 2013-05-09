@@ -14,6 +14,9 @@ class TestTemplate < MiniTest::Unit::TestCase
         cb.uncheck 'unchecked'
       end
       t.fill      'radio_group', 'button'
+      t.radio_group 'better_radio_group' do |rg|
+        rg.fill 'button'
+      end
     end
 
     @template_with_name = PDFRavager::Template.new('template'){}
@@ -49,6 +52,10 @@ class TestTemplate < MiniTest::Unit::TestCase
 
   def test_that_checkbox_group_box_is_unchecked
     assert_includes @template.fields, PDFRavager::Fields::Checkbox.new('cbox_group.unchecked', false)
+  end
+
+  def test_that_radio_group_button_is_filled
+    assert_includes @template.fields, PDFRavager::Fields::Radio.new('better_radio_group', 'button')
   end
 
 end

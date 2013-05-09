@@ -3,6 +3,7 @@ require 'pdf_ravager/fields/rich_text'
 require 'pdf_ravager/fields/checkbox'
 require 'pdf_ravager/fields/radio'
 require 'pdf_ravager/fieldsets/checkbox_group'
+require 'pdf_ravager/fieldsets/radio_group'
 require 'pdf_ravager/ravager' if RUBY_PLATFORM =~ /java/
 
 module PDFRavager
@@ -36,6 +37,10 @@ module PDFRavager
 
     def checkbox_group(group_name, &blk)
       PDFRavager::Fieldsets::CheckboxGroup.new(self, group_name, &blk)
+    end
+
+    def radio_group(group_name, &blk)
+      PDFRavager::Fieldsets::RadioGroup.new(self, group_name, &blk)
     end
 
     if RUBY_PLATFORM =~ /java/
