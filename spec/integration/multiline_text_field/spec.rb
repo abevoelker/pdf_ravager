@@ -7,7 +7,7 @@ describe 'a PDF with a multiline text field' do
         t.text 'multilinetext', 'FOO' * 10000
       end
       pdf_file = File.join(File.dirname(__FILE__), "pdf")
-      @pdf_file = "#{mktemp}.pdf"
+      @pdf_file = mktemp('.pdf')
       @pdf = p.ravage pdf_file, :out_file => @pdf_file
     end
 

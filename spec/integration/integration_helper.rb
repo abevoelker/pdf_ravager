@@ -3,20 +3,20 @@ require 'rspec'
 require 'pdf_ravager'
 require 'securerandom'
 require 'chunky_png'
+require 'tempfile'
 
-def mktemp
-  # the tests are already dependent on Linux, so /tmp/ usage should be OK
-  "/tmp/#{SecureRandom.uuid}"
+def mktemp(ext)
+  Tempfile.new(['', ext]).path
 end
 
 def pdf_to_ps(pdf_file, out_file=nil)
-  out_file ||= "#{mktemp}.ps"
+  out_file ||= mktemp('.ps')
   system("acroread -toPostScript -markupsOn -pairs #{pdf_file} #{out_file} >/dev/null 2>&1")
   out_file
 end
 
 def ps_to_png(ps_file, out_file=nil)
-  out_file ||= "#{mktemp}.png"
+  out_file ||= mktemp('.png')
   system("gs -dSAFER -dBATCH -dNOPAUSE -r150 -sDEVICE=png16m -dTextAlphaBits=4 -sOutputFile=#{out_file} #{ps_file} >/dev/null 2>&1")
   out_file
 end
