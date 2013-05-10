@@ -17,6 +17,22 @@ module PDFRavager
         self.group_name == other.group_name && self.name == other.name
       end
 
+      def acro_form_name
+        @group_name
+      end
+
+      def xfa_name
+        @group_name
+      end
+
+      def acro_form_value
+        @name
+      end
+
+      def xfa_value
+        @name
+      end
+
     end
   end
 end
