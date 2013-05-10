@@ -10,7 +10,6 @@ Gem::Specification.new do |s|
   s.summary     = %q{DSL to aid filling out AcroForms PDF and XFA documents}
   s.description = %q{DSL to aid filling out AcroForms PDF and XFA documents}
   s.license     = 'MIT'
-  s.platform    = 'java'
 
   s.add_dependency "nokogiri"
   s.add_development_dependency "bundler",    "~> 1.0"
