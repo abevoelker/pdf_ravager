@@ -27,6 +27,10 @@ module PDFRavager
         @value ? @true_value : @false_value
       end
 
+      def acro_form_value
+        @value ? @true_value : @false_value
+      end
+
     end
   end
 end

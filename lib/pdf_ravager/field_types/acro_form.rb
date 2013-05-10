@@ -15,9 +15,13 @@ module PDFRavager
         end
       end
 
+      def acro_form_value
+        @value.to_s
+      end
+
       def set_acro_form_value(acro_fields)
         begin
-          acro_fields.setField(SOM.short_name(@name), @value)
+          acro_fields.setField(SOM.short_name(@name), acro_form_value)
           true
         rescue java.lang.NullPointerException
           false
