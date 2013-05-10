@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/unit_helper'
+require File.dirname(__FILE__) + '/fields_helper'
 require 'pdf_ravager/template'
 
 class TestCheckbox < MiniTest::Unit::TestCase
