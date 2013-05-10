@@ -20,7 +20,12 @@ module PDFRavager
         # https://github.com/sparklemotion/nokogiri/issues/781
         doc = Nokogiri::XML(Nokogiri::XML::Document.wrap(xfa.getDomDocument).to_xml)
         # first, assume the user-provided field name is an xpath and use it directly:
-        strict_match = doc.xpath(name)
+        strict_match =
+          begin
+            doc.xpath(name)
+          rescue Nokogiri::XML::XPath::SyntaxError
+            []
+          end
         # otherwise, we'll loosely match the field name anywhere in the document:
         loose_match = doc.xpath("//*[local-name()='field'][@name='#{@name}']")
         matched_nodes = strict_match.any? ? strict_match : loose_match
