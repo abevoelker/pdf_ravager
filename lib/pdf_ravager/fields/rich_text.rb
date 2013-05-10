@@ -15,7 +15,10 @@ module PDFRavager
         self.name == other.name && self.value == other.value
       end
 
-      def set_xfa_value(doc)
+      def set_xfa_value(xfa)
+        # the double-load is to work around a Nokogiri bug I found:
+        # https://github.com/sparklemotion/nokogiri/issues/781
+        doc = Nokogiri::XML(Nokogiri::XML::Document.wrap(xfa.getDomDocument).to_xml)
         # first, assume the user-provided field name is an xpath and use it directly:
         strict_match = doc.xpath(name)
         # otherwise, we'll loosely match the field name anywhere in the document:
@@ -28,7 +31,7 @@ module PDFRavager
             Nokogiri::XML::Builder.with(value_node) do |xml|
               xml.exData('contentType' => 'text/html') do
                 xml.body_('xmlns' => "http://www.w3.org/1999/xhtml", 'xmlns:xfa' => "http://www.xfa.org/schema/xfa-data/1.0/") do
-                  xml << value # Note: this value is not sanitized/escaped!
+                  xml << xfa_value # Note: this value is not sanitized/escaped!
                 end
               end
             end
@@ -38,13 +41,15 @@ module PDFRavager
               xml.value_ do
                 xml.exData('contentType' => 'text/html') do
                   xml.body_('xmlns' => "http://www.w3.org/1999/xhtml", 'xmlns:xfa' => "http://www.xfa.org/schema/xfa-data/1.0/") do
-                    xml << value # Note: this value is not sanitized/escaped!
+                    xml << xfa_value # Note: this value is not sanitized/escaped!
                   end
                 end
               end
             end
           end
         end
+        xfa.setDomDocument(doc.to_java)
+        xfa.setChanged(true)
       end
 
     end

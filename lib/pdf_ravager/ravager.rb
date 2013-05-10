@@ -52,15 +52,10 @@ module PDFRavager
       when :acro_forms
         @template.fields.each{|f| f.set_acro_form_value(@afields) }
       when :xfa
-        # the double-load is to work around a Nokogiri bug I found:
-        # https://github.com/sparklemotion/nokogiri/issues/781
-        doc = Nokogiri::XML(Nokogiri::XML::Document.wrap(@xfa.getDomDocument).to_xml)
         @template.fields.each do |f|
           f.set_acro_form_value(@afields) if f.respond_to? :set_acro_form_value
-          f.set_xfa_value(doc) if f.respond_to? :set_xfa_value
+          f.set_xfa_value(@xfa) if f.respond_to? :set_xfa_value
         end
-        @xfa.setDomDocument(doc.to_java)
-        @xfa.setChanged(true)
       end
     end
 

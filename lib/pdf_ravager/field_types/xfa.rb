@@ -12,7 +12,10 @@ module PDFRavager
         @value.to_s
       end
 
-      def set_xfa_value(doc)
+      def set_xfa_value(xfa)
+        # the double-load is to work around a Nokogiri bug I found:
+        # https://github.com/sparklemotion/nokogiri/issues/781
+        doc = Nokogiri::XML(Nokogiri::XML::Document.wrap(xfa.getDomDocument).to_xml)
         # first, assume the user-provided field name is an xpath and use it directly:
         strict_match = doc.xpath(name)
         # otherwise, we'll loosely match the field name anywhere in the document:
@@ -24,12 +27,12 @@ module PDFRavager
             text_node = value_node.at_xpath("*[local-name()='#{xfa_node_type}']")
             if text_node
               # Complete node structure already exists - just set the value
-              text_node.content = value
+              text_node.content = xfa_value
             else
               # <value> node exists, but without child <text> node
               Nokogiri::XML::Builder.with(value_node) do |xml|
                 xml.text_ {
-                  xml.send("#{xfa_node_type}_", value)
+                  xml.send("#{xfa_node_type}_", xfa_value)
                 }
               end
             end
@@ -38,12 +41,14 @@ module PDFRavager
             Nokogiri::XML::Builder.with(node) do |xml|
               xml.value_ {
                 xml.send("#{xfa_node_type}_") {
-                  xml.text value
+                  xml.text xfa_value
                 }
               }
             end
           end
         end
+        xfa.setDomDocument(doc.to_java)
+        xfa.setChanged(true)
       end
 
     end
