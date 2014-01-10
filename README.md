@@ -1,12 +1,12 @@
 # PDF Ravager [![Build Status](https://secure.travis-ci.org/abevoelker/pdf_ravager.png)](http://travis-ci.org/abevoelker/pdf_ravager)
 
-Provides a simple DSL for easily filling out AcroForms PDF or XFA documents.
+JRuby-only DSL for filling out AcroForms PDF or XFA documents.
 
 ## Description
 
 This library uses a combination of a simple DSL and a minimal façade over the
-last free version of the iText library to aid in filling out AcroForms PDF or
-XFA documents.
+last free version of the Java iText library to aid in filling out AcroForms PDF
+or XFA documents.
 
 ## Synopsis
 

@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Abe Voelker']
   s.email       = 'abe@abevoelker.com'
   s.homepage    = 'https://github.com/abevoelker/pdf_ravager'
-  s.summary     = %q{DSL to aid filling out AcroForms PDF and XFA documents}
-  s.description = %q{DSL to aid filling out AcroForms PDF and XFA documents}
+  s.summary     = %q{JRuby-only DSL for filling out AcroForms PDF and XFA documents}
+  s.description = %q{JRuby-only DSL for filling out AcroForms PDF and XFA documents}
   s.license     = 'MIT'
 
   s.add_dependency "nokogiri"
