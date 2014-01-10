@@ -11,11 +11,11 @@ XFA documents.
 ## Synopsis
 
 ```ruby
-require 'pdf_ravager/kernel'
+require 'pdf_ravager'
 
-data = {name: 'Bob', gender: 'm', relation: 'Uncle' }
+data = { name: 'Bob', gender: 'm', relation: 'Uncle' }
 
-template = pdf do |p|
+template = PDFRavager::Template.new do |p|
   p.text      'name', data[:name]
   p.rich_text 'name_stylized', "<b>#{data[:name]}</b>"
   p.radio_group 'sex' do |rg|
@@ -40,15 +40,17 @@ template.ravage '/tmp/info.pdf', out_file: '/tmp/info_filled.pdf'
 template.ravage '/tmp/info.pdf', out_file: '/tmp/info_filled.pdf', read_only: true
 ```
 
-If you don't want the global `pdf` method, the default `require 'pdf_ravager'`
-actually doesn't add it. You just need to be more wordy in this case:
+Although not recommended due to the pollution of the global namespace, in the
+interest of brevity you can introduce a shorthand `pdf` method that is
+equivalent to `PDFRavager::Template.new` by requiring `pdf_ravager/kernel`
+instead of `pdf_ravager`:
 
 ```ruby
-require 'pdf_ravager'
+require 'pdf_ravager/kernel'
 
 data = {name: 'Bob', gender: 'm', relation: 'Uncle' }
 
-template = PDFRavager::Template.new do |p|
+template = pdf do |p|
   p.text 'name', data[:name]
   # ...
 end
