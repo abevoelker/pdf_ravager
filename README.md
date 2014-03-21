@@ -56,6 +56,8 @@ template = pdf do |p|
 end
 ```
 
+Note: `pdf` has been deprecated and will be removed in a future release.
+
 ## Usage
 
 ### Field Names
