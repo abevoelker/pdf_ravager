@@ -1,27 +1,36 @@
 require File.dirname(__FILE__) + '/fields_helper'
-require 'pdf_ravager/template'
 
-class TestCheckbox < MiniTest::Unit::TestCase
+describe PDFRavager::Fields::Checkbox do
 
-  def setup
-    @checked   = PDFRavager::Fields::Checkbox.new('checkbox1', true,  :true_value => 'foo', :false_value => 'bar')
-    @unchecked = PDFRavager::Fields::Checkbox.new('checkbox2', false, :true_value => 'foo', :false_value => 'bar')
+  let(:checked)   { PDFRavager::Fields::Checkbox.new('checkbox1', true,  :true_value => 'foo', :false_value => 'bar') }
+  let(:unchecked) { PDFRavager::Fields::Checkbox.new('checkbox2', false, :true_value => 'foo', :false_value => 'bar') }
+
+  context 'checked' do
+    context 'AcroForm value' do
+      it 'sets value properly' do
+        expect(checked.xfa_value).to eq('foo')
+      end
+    end
+
+    context 'XFA value' do
+      it 'sets value properly' do
+        expect(checked.xfa_value).to eq('foo')
+      end
+    end
   end
 
-  def test_that_custom_checked_acro_form_value_is_set
-    assert_equal @checked.acro_form_value, 'foo'
-  end
+  context 'unchecked' do
+    context 'AcroForm value' do
+      it 'sets value properly' do
+        expect(unchecked.xfa_value).to eq('bar')
+      end
+    end
 
-  def test_that_custom_checked_xfa_value_is_set
-    assert_equal @checked.xfa_value, 'foo'
-  end
-
-  def test_that_custom_unchecked_acro_form_value_is_set
-    assert_equal @unchecked.acro_form_value, 'bar'
-  end
-
-  def test_that_custom_unchecked_xfa_value_is_set
-    assert_equal @unchecked.xfa_value, 'bar'
+    context 'XFA value' do
+      it 'sets value properly' do
+        expect(unchecked.xfa_value).to eq('bar')
+      end
+    end
   end
 
 end

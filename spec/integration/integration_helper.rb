@@ -1,6 +1,4 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'rspec'
-require 'pdf_ravager'
 require 'securerandom'
 require 'chunky_png'
 require 'tempfile'

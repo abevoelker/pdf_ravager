@@ -1,1 +1,2 @@
-require 'turn/autorun'
+require 'rspec'
+require 'pdf_ravager'

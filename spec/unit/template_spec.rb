@@ -1,10 +1,9 @@
 require File.dirname(__FILE__) + '/unit_helper'
-require 'pdf_ravager/template'
 
-class TestTemplate < MiniTest::Unit::TestCase
+describe PDFRavager::Template do
 
-  def setup
-    @template = PDFRavager::Template.new do |t|
+  let(:template) {
+    PDFRavager::Template.new do |t|
       t.text      'text',        'foo'
       t.rich_text 'rich_text',   '<b>foo</b>'
       t.check     'checkbox1'
@@ -18,44 +17,75 @@ class TestTemplate < MiniTest::Unit::TestCase
         rg.fill 'button'
       end
     end
+  }
+  let(:template_with_name) { PDFRavager::Template.new('template'){} }
 
-    @template_with_name = PDFRavager::Template.new('template'){}
+  context 'name' do
+    context 'template with a name' do
+      it 'is set' do
+        expect(template_with_name.name).to eq('template')
+      end
+    end
+
+    context 'template without a name' do
+      it 'is unset' do
+        expect(template.name).to be_nil
+      end
+    end
   end
 
-  def test_that_text_is_set
-    assert_includes @template.fields, PDFRavager::Fields::Text.new('text', 'foo')
-  end
+  context 'template fields' do
+    context 'text' do
+      it 'is set' do
+        expect(template.fields).to include(PDFRavager::Fields::Text.new('text', 'foo'))
+      end
+    end
 
-  def test_that_rich_text_is_set
-    assert_includes @template.fields, PDFRavager::Fields::RichText.new('rich_text', '<b>foo</b>')
-  end
+    context 'rich_text' do
+      it 'is set' do
+        expect(template.fields).to include(PDFRavager::Fields::RichText.new('rich_text', '<b>foo</b>'))
+      end
+    end
 
-  def test_that_checkbox_is_set
-    assert_includes @template.fields, PDFRavager::Fields::Checkbox.new('checkbox1', true)
-  end
+    context 'checkbox1' do
+      it 'is set' do
+        expect(template.fields).to include(PDFRavager::Fields::Checkbox.new('checkbox1', true))
+      end
+    end
 
-  def test_that_checkbox_is_unset
-    assert_includes @template.fields, PDFRavager::Fields::Checkbox.new('checkbox2', false)
-  end
+    context 'checkbox2' do
+      it 'is unset' do
+        expect(template.fields).to include(PDFRavager::Fields::Checkbox.new('checkbox2', false))
+      end
+    end
 
-  def test_that_radio_button_is_filled
-    assert_includes @template.fields, PDFRavager::Fields::Radio.new('radio_group', 'button')
-  end
+    context 'cbox_group' do
+      context '.checked' do
+        it 'is checked' do
+          expect(template.fields).to include(PDFRavager::Fields::Checkbox.new('cbox_group.checked', true))
+        end
+      end
 
-  def test_that_name_is_set
-    assert_equal @template_with_name.name, 'template'
-  end
+      context '.unchecked' do
+        it 'is unchecked' do
+          expect(template.fields).to include(PDFRavager::Fields::Checkbox.new('cbox_group.unchecked', false))
+        end
+      end
+    end
 
-  def test_that_checkbox_group_box_is_checked
-    assert_includes @template.fields, PDFRavager::Fields::Checkbox.new('cbox_group.checked', true)
-  end
+    context 'radio buttons' do
+      context 'one-line syntax' do
+        it 'fills the radio_group button' do
+          expect(template.fields).to include(PDFRavager::Fields::Radio.new('radio_group', 'button'))
+        end
+      end
 
-  def test_that_checkbox_group_box_is_unchecked
-    assert_includes @template.fields, PDFRavager::Fields::Checkbox.new('cbox_group.unchecked', false)
-  end
-
-  def test_that_radio_group_button_is_filled
-    assert_includes @template.fields, PDFRavager::Fields::Radio.new('better_radio_group', 'button')
+      context 'block syntax' do
+        it 'fills the better_radio_group button' do
+          expect(template.fields).to include(PDFRavager::Fields::Radio.new('better_radio_group', 'button'))
+        end
+      end
+    end
   end
 
 end
