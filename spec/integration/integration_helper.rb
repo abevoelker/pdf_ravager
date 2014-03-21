@@ -23,6 +23,16 @@ def pdf_to_png(pdf_file)
   ps_to_png(pdf_to_ps(pdf_file))
 end
 
+def ravage_to_temp_file(template, input_pdf)
+  file = mktemp('.pdf')
+  template.ravage input_pdf, :out_file => file
+  file
+end
+
+def compare_pdf_to_png(input_pdf, png)
+  png_diff(pdf_to_png(input_pdf), png)
+end
+
 # code taken from http://jeffkreeftmeijer.com/2011/comparing-images-and-creating-image-diffs/
 def png_diff(img1, img2)
   images = [
