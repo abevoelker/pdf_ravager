@@ -4,7 +4,9 @@ require 'chunky_png'
 require 'tempfile'
 
 def mktemp(ext)
-  Tempfile.new(['', ext]).path
+  f = Tempfile.new(['', ext])
+  f.close
+  f.path
 end
 
 def pdf_to_ps(pdf_file, out_file=nil)
