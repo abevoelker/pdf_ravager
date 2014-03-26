@@ -2,39 +2,43 @@ require File.dirname(__FILE__) + '/unit_helper'
 
 describe PDFRavager::Template do
 
-  let(:template) {
-    PDFRavager::Template.new do |t|
-      t.text      'text',        'foo'
-      t.rich_text 'rich_text',   '<b>foo</b>'
-      t.check     'checkbox1'
-      t.uncheck   'checkbox2'
-      t.checkbox_group 'cbox_group' do |cb|
-        cb.check   'checked'
-        cb.uncheck 'unchecked'
-      end
-      t.fill      'radio_group', 'button'
-      t.radio_group 'better_radio_group' do |rg|
-        rg.fill 'button'
-      end
-    end
-  }
-  let(:template_with_name) { PDFRavager::Template.new('template'){} }
-
-  context 'name' do
+  context 'initialization' do
     context 'template with a name' do
-      it 'is set' do
-        expect(template_with_name.name).to eq('template')
+      let(:template) { PDFRavager::Template.new('template') }
+
+      it 'sets the name' do
+        expect(template.name).to eq('template')
       end
     end
 
     context 'template without a name' do
-      it 'is unset' do
+      let(:template) { PDFRavager::Template.new }
+
+      it 'does not set the name' do
         expect(template.name).to be_nil
       end
     end
   end
 
-  context 'template fields' do
+  context 'setting template values' do
+
+    let(:template) {
+      PDFRavager::Template.new do |t|
+        t.text      'text',        'foo'
+        t.rich_text 'rich_text',   '<b>foo</b>'
+        t.check     'checkbox1'
+        t.uncheck   'checkbox2'
+        t.checkbox_group 'cbox_group' do |cb|
+          cb.check   'checked'
+          cb.uncheck 'unchecked'
+        end
+        t.fill      'radio_group', 'button'
+        t.radio_group 'better_radio_group' do |rg|
+          rg.fill 'button'
+        end
+      end
+    }
+
     context 'text' do
       it 'is set' do
         expect(template.fields).to include(PDFRavager::Fields::Text.new('text', 'foo'))
