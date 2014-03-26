@@ -30,13 +30,11 @@ module PDFRavager
     # and some invariants that need to be cleaned up. therefore, Ravager's
     # lifecycle is managed by the public class method `ravage`.
     def initialize(template, opts={})
-      @template, @opts = template, opts
-      @reader = com.lowagie.text.pdf.PdfReader.new(opts[:in_file])
-      @stamper = com.lowagie.text.pdf.PdfStamper.new(@reader, opts[:out])
+      @template = template
+      reader = com.lowagie.text.pdf.PdfReader.new(opts[:in_file])
+      @stamper = com.lowagie.text.pdf.PdfStamper.new(reader, opts[:out])
       @afields = @stamper.getAcroFields
       @xfa = @afields.getXfa
-      @som = @xfa.getDatasetsSom
-      @som_template = @xfa.getTemplateSom
       @type = @xfa.isXfaPresent ? :xfa : :acro_forms
       if @type == :xfa
         @xfa_type = @afields.getFields.empty? ? :dynamic : :static
