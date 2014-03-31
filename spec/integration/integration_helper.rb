@@ -5,6 +5,7 @@ require 'tempfile'
 
 def mktemp(ext)
   f = Tempfile.new(['', ext])
+  (@@prevent_gc ||= []) << f # prevents file from getting deleted until all tests are done
   f.close
   f.path
 end
