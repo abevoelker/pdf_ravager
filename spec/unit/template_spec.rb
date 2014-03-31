@@ -18,6 +18,22 @@ describe PDFRavager::Template do
         expect(template.name).to be_nil
       end
     end
+
+    context 'setting strategy' do
+      context 'with a valid strategy' do
+        let(:template) { PDFRavager::Template.new(:strategy => :xfa) }
+
+        it 'sets the strategy' do
+          expect(template.strategy).to eq(:xfa)
+        end
+      end
+
+      context 'with an invalid strategy' do
+        it 'raises an error' do
+          expect { PDFRavager::Template.new(:strategy => :foo) }.to raise_error
+        end
+      end
+    end
   end
 
   context 'setting template values' do

@@ -8,10 +8,20 @@ require 'pdf_ravager/ravager' if RUBY_PLATFORM =~ /java/
 
 module PDFRavager
   class Template
-    attr_reader :name, :fields
+    attr_reader   :name, :strategy
+    attr_accessor :fields
 
-    def initialize(name=nil)
-      @name, @fields = name, []
+    def initialize(opts={})
+      opts = {:name => opts} if opts.respond_to?(:to_sym)
+      unless opts[:name].nil?
+        warn "[DEPRECATION] Passing a name to `PDFRavager::Template.new` " +
+             "is deprecated and will be removed in 1.0.0"
+      end
+      @name, @strategy = opts[:name], (opts[:strategy] || :acro_forms)
+      unless [:acro_forms, :xfa].include?(@strategy)
+        raise "Bad strategy '#{@strategy}'"
+      end
+      @fields = []
       yield self if block_given?
     end
 
@@ -45,7 +55,7 @@ module PDFRavager
 
     if RUBY_PLATFORM =~ /java/
       def ravage(file, opts={})
-        PDFRavager::Ravager.ravage(self, opts.merge({:in_file => file}))
+        PDFRavager::Ravager.new(self, opts.merge({:in_file => file})).ravage
       end
     else
       def ravage(file, opts={})
