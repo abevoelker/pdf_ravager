@@ -5,6 +5,7 @@ gemspec
 platforms :jruby do
   # Necessary for `rake release` on JRuby
   gem "jruby-openssl", "~> 0.7.7"
+  gem 'bouncy-castle-java'
 end
 
 gem "simplecov", "~> 0.8", :require => false
