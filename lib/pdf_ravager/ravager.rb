@@ -1,5 +1,6 @@
 require 'pdf_ravager/strategies/xfa'
 require 'pdf_ravager/strategies/acro_form'
+require 'pdf_ravager/strategies/smart'
 
 unless RUBY_PLATFORM =~ /java/
   raise "You can only ravage PDFs using JRuby, not #{RUBY_PLATFORM}!"
@@ -33,6 +34,8 @@ module PDFRavager
         Strategies::AcroForm.new(@stamper)
       when :xfa
         Strategies::XFA.new(@stamper)
+      when :smart
+        Strategies::Smart.new(@stamper)
       end
     end
 

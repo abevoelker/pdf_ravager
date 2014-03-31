@@ -17,8 +17,8 @@ module PDFRavager
         warn "[DEPRECATION] Passing a name to `PDFRavager::Template.new` " +
              "is deprecated and will be removed in 1.0.0"
       end
-      @name, @strategy = opts[:name], (opts[:strategy] || :acro_forms)
-      unless [:acro_forms, :xfa].include?(@strategy)
+      @name, @strategy = opts[:name], (opts[:strategy] || :smart)
+      unless [:smart, :acro_forms, :xfa].include?(@strategy)
         raise "Bad strategy '#{@strategy}'"
       end
       @fields = []
