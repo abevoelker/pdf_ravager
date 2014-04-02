@@ -115,7 +115,7 @@ end
 Copyright
 ---------
 
-Copyright (c) 2012-2013 Abe Voelker. Released under the terms of the
+Copyright (c) 2012-2014 Abe Voelker. Released under the terms of the
 MIT license. See LICENSE for details.
 
 The [version of iText][2] vendored is licensed under the LGPL.
