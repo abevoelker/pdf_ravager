@@ -1,3 +1,10 @@
+## 0.2.1
+
+Bugfixes:
+
+  - Fix rich text field type not setting values properly
+  - Fix `:smart` strategy not applying read-only properly
+
 ## 0.2.0
 
 Features:
@@ -5,4 +12,5 @@ Features:
   - Deprecate global `pdf` convenience method
   - Deprecate name option to `PDFRavager::Template.new`
   - Move PDF population methods into strategies
-  - Speed up PDF population by default (i.e. :smart strategy) by avoiding XFA
+  - Speed up PDF population by default (i.e. `:smart` strategy) by avoiding XFA
+    population when possible
