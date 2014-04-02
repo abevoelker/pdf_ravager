@@ -1,14 +1,26 @@
-# PDF Ravager [![Build Status](https://secure.travis-ci.org/abevoelker/pdf_ravager.png)](http://travis-ci.org/abevoelker/pdf_ravager)
+PDF Ravager
+===========
+[![Gem Version](https://badge.fury.io/rb/pdf_ravager.png)][gem]
+[![Build Status](https://secure.travis-ci.org/abevoelker/pdf_ravager.png)][travis]
+[![Code Climate](https://codeclimate.com/github/abevoelker/pdf_ravager.png)][codeclimate]
+[![Dependency Status](https://gemnasium.com/abevoelker/pdf_ravager.svg)][gemnasium]
+
+[gem]: https://rubygems.org/gems/pdf_ravager
+[travis]: http://travis-ci.org/abevoelker/pdf_ravager
+[codeclimate]: https://codeclimate.com/github/abevoelker/pdf_ravager
+[gemnasium]: https://gemnasium.com/abevoelker/pdf_ravager
 
 JRuby-only DSL for filling out AcroForms PDF or XFA documents.
 
-## Description
+Description
+-----------
 
 This library uses a combination of a simple DSL and a minimal façade over the
 last free version of the Java iText library to aid in filling out AcroForms PDF
 or XFA documents.
 
-## Synopsis
+Synopsis
+--------
 
 ```ruby
 require 'pdf_ravager'
@@ -58,7 +70,8 @@ end
 
 Note: `pdf` has been deprecated and will be removed in a future release.
 
-## Usage
+Usage
+-----
 
 ### Field Names
 To query and modify a form's field names, use a tool such as Adobe
@@ -99,7 +112,8 @@ pdf do |p|
 end
 ```
 
-## Copyright
+Copyright
+---------
 
 Copyright (c) 2012-2013 Abe Voelker. Released under the terms of the
 MIT license. See LICENSE for details.
