@@ -73,6 +73,26 @@ Note: `pdf` has been deprecated and will be removed in a future release.
 Usage
 -----
 
+### Strategies
+
+By default, PDF Ravager uses a `:smart` strategy for populating PDFs which
+first attempts to fill fields using the `:acro_forms` strategy, then
+applies the `:xfa` strategy to fields that were unable to be populated with
+`:acro_forms`.  If you know which strategy you want ahead of time (e.g. your
+form is strictly a static AcroForm or a dynamic XFA), you can set it in
+the template initializer like so:
+
+```ruby
+template = PDFRavager::Template.new(strategy: :xfa) do |p|
+  # ...
+end
+```
+
+Valid options are:
+* `:smart`
+* `:acro_forms`
+* `:xfa`
+
 ### Field Names
 To query and modify a form's field names, use a tool such as Adobe
 LiveCycle.
