@@ -5,6 +5,7 @@ rvm:
   - jruby-head
 matrix:
   allow_failures:
+    - rvm: jruby-18mode
     - rvm: jruby-head
 before_install:
   - sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner" -y
