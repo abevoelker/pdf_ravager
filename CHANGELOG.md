@@ -1,3 +1,9 @@
+## 0.2.2 (2014-08-21)
+
+Features:
+
+  - Make AcroForms strategy smarter by attempting full SOM path match
+
 ## 0.2.1 (2014-04-02)
 
 Bugfixes:
