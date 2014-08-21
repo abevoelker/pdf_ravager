@@ -9,7 +9,11 @@ module PDFRavager
       def set_field_values(template)
         template.fields.select{|f| f.respond_to?(:acro_form_value)}.select do |f|
           begin
-            @afields.setField(FieldTypes::AcroForm::SOM.short_name(f.acro_form_name), f.acro_form_value)
+            # first assume the user has provided the full/raw SOM path
+            unless @afields.setField(f.acro_form_name, f.acro_form_value)
+              # if that fails, try setting the shorthand version of the path
+              @afields.setField(FieldTypes::AcroForm::SOM.short_name(f.acro_form_name), f.acro_form_value)
+            end
           rescue java.lang.NullPointerException
             false
           end
