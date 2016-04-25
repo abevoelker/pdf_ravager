@@ -15,8 +15,8 @@ JRuby-only DSL for filling out AcroForms PDF or XFA documents.
 Description
 -----------
 
-This library uses a combination of a simple DSL and a minimal façade over the
-last free version of the Java iText library to aid in filling out AcroForms PDF
+This library uses a combination of a simple DSL and a minimal façade over a
+pre-AGPL version of the Java iText library to aid in filling out AcroForms PDF
 or XFA documents.
 
 Synopsis
@@ -135,10 +135,13 @@ end
 Copyright
 ---------
 
-Copyright (c) 2012-2014 Abe Voelker. Released under the terms of the
+Copyright (c) 2012-2016 Abe Voelker. Released under the terms of the
 MIT license. See LICENSE for details.
 
-The [version of iText][2] vendored is licensed under the LGPL.
+The [version of iText][2] vendored is licensed under the LGPL. Note that this
+version of iText was never officially released by iText Software, but is
+a custom build [provided by Yuvi Masory][3] (kind thanks to them for that).
 
 [1]: http://partners.adobe.com/public/developer/xml/index_arch.html
 [2]: http://itext.svn.sourceforge.net/viewvc/itext/tags/iText_4_2_0/
+[3]: https://github.com/ymasory/iText-4.2.0
